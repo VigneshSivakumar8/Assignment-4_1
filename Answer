@@ -1,0 +1,110 @@
+1) Program 1 :-
+  package hdfs;
+
+  import java.io.*;
+  import org.apache.hadoop.conf.Configuration;
+  import org.apache.hadoop.fs.FileSystem;
+  import org.apache.hadoop.fs.Path;
+  import org.apache.hadoop.fs.FileStatus;
+
+  public class FileListing
+  {
+     public static void main(String[] args)
+     {
+        if (args.length != 1)
+        {
+          System.out.println("Pass one argument");
+          System.exit(1);
+        }
+        Path path = new Path(args[0]);
+
+        try
+        {
+          Configuration conf = new Configuration();
+          FileSystem fileSystem = FileSystem.get(path.toUri(), conf);
+          FileStatus[] fileStatus=fileSystem.listStatus(path);
+          for (FileStatus fStat : fileStatus) 
+          {
+            System.out.println(fStat.getPath());
+          }
+        }
+        catch (IOException e)
+        {
+              e.printStackTrace();
+        }
+     }
+  }
+  
+2) Program 2 :-
+
+  import java.io.*;
+  import org.apache.hadoop.conf.Configuration;
+  import org.apache.hadoop.fs.FileSystem;
+  import org.apache.hadoop.fs.LocatedFileStatus:
+  import org.apache.hadoop.fs.Path;
+  import org.apache.hadoop.fs.FileStatus;
+
+  public class FileListing
+  {
+      public static void main(String[] args)
+      {
+        if (args.length != 1)
+        {
+          System.out.println("Enter any one argument");
+          System.exit(1);
+        }
+        Path p = new Path(args[0]);
+        try
+        {
+          Configuration conf = new Configuration();
+          FileSystem fileSystem = FileSystem.get(p.toUri(), conf);
+          FileStatus[] filestatus=filesystem.listStatus(p);
+          RemoteIterator<LocatedFileStatus> it =filesystem.listFiles(p,true);
+          while(it.hasNext()) 
+          {
+            System.out.println(it.next().getPath());
+          }
+        }
+        catch (IOException e)
+        {
+              e.printStackTrace();
+        }
+      }
+  }
+
+3) PROGRAM 3 :-
+
+  import java.io.*;
+  import org.apache.hadoop.conf.Configuration;
+  import org.apache.hadoop.fs.FileSystem;
+  import org.apache.hadoop.fs.Path;
+  import org.apache.hadoop.fs.RemoteIterator;
+  import org.apache.hadoop.fs.LocatedFileStatus;
+
+  public class FileListing
+  {
+    public static void main(String[] args) 
+    {
+     int len=args.length;		
+     for(int i=0;i<len;i++)
+     {
+       Path path=new Path(args[i]);		
+       try
+       {
+         Configuration conf = new Configuration();
+         FileSystem fileSystem = FileSystem.get(path.toUri(), conf);
+         RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(path,true);  //recursive set to true(second parameter)
+         System.out.println(“for argument : “+args[i]);
+         while(it.hasNext())
+         {
+           System.out.println(it.next().getPath());
+         }
+       }
+       catch (IOException exc)
+       {
+          exc.printStackTrace();
+       }
+     }
+    }
+  }
+  
